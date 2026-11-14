@@ -41,7 +41,7 @@ function card(doc) {
   const tags=el('div','card-tags');for(const tag of doc.tags.slice(0,4))tags.append(el('span','tag-pill',tag));node.append(tags,el('div','card-date',`Saved ${date(doc.created_at)}${doc.filename?' · Original file attached':''}`));node.onclick=()=>openEditor(doc.id);return node;
 }
 async function showView(view) {
-  state.view=view;document.querySelectorAll('.view').forEach(n=>n.classList.toggle('hidden',n.id!==view+'-view'));document.querySelectorAll('[data-view]').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
+  state.view=view;document.querySelectorAll('.view').forEach(n=>n.classList.toggle('hidden',n.id!==view+'-view'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
   const names={library:'My library',chat:'Ask B-Ram',review:'Daily review',settings:'Settings & backup'};$('breadcrumb').replaceChildren(document.createTextNode('Workspace '),el('span','','/'),document.createTextNode(names[view]));
   try {await refreshStats();if(view==='library')await refreshLibrary();if(view==='review')await refreshReview();if(view==='settings')await refreshStatus();}catch(error){toast(error.message);}
 }
@@ -68,7 +68,7 @@ $('sample-notes').onclick=async()=>{
     {title:'A place for unfinished thoughts',kind:'note',tags:['welcome','ideas'],content:'Welcome to B-Ram. This is an example note — edit it, delete it, or make it your own.\n\nCapture ideas before they disappear. A question, a useful quote, a connection between two things you read. Your library doesn’t need to be perfect to be useful.'},
     {title:'Learning is a practice of returning',kind:'note',tags:['learning','habits'],content:'Example note: Spaced repetition helps us remember by revisiting ideas over increasing intervals.\n\nA useful routine: capture one idea, explain it in your own words, then revisit it tomorrow. B-Ram’s daily review brings your saved items back at 1, 3, 7, 14, and 30 day intervals.'},
     {title:'A small Python pattern: grouping ideas',kind:'snippet',tags:['python','tools'],content:'# Example: group notes by tag\nfrom collections import defaultdict\n\nby_tag = defaultdict(list)\nfor note in notes:\n    for tag in note.tags:\n        by_tag[tag].append(note.title)\n\n# Small tools make room for bigger ideas.'},
-    {title:'SQLite: a database that travels with you',kind:'bookmark',tags:['local-first','reading'],url:'https://www.sqlite.org/about.html',content:'Example bookmark. SQLite stores a complete database in a single file. B-Ram uses it for your notes, original documents, full-text index, and local embedding vectors.\n\nSaved link only — this page has not been fetched or indexed.'}
+    {title:'IndexedDB: a library in your browser',kind:'bookmark',tags:['local-first','reading'],url:'https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API',content:'Example bookmark. IndexedDB stores structured data in your browser. B-Ram uses it for notes, original documents, and local embedding vectors. Full-text search runs over your saved documents on this device.\n\nSaved link only — this page has not been fetched or indexed.'}
   ];
   try{for(const doc of samples)await api('/documents',json('POST',doc));await showView('library');toast('Four example items added. Make them your own.');}catch(error){toast(error.message);}finally{$('sample-notes').disabled=false;}
 };
