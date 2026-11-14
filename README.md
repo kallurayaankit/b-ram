@@ -9,6 +9,14 @@ Built by [Ankit Kalluraya](https://github.com/kallurayaankit).
 
 **No account required. No remote document database. Core features work without an AI model.**
 
+## Live demo
+
+**[Open B-Ram →](https://b-ram.vercel.app/)**
+
+No sign-up needed. Click **Explore with a few example notes** to try the library, then search for `repetition` or ask **“What do my notes say about spaced repetition?”** in Ask B-Ram.
+
+The demo stores its library in your own browser, not a shared server database. Example-note loading, full-text search, source-excerpt answers, and persistence after reload were checked on 14 November 2026. Optional semantic indexing and browser AI have the compatibility and download requirements described below.
+
 ## What it does
 
 | Feature | How it works |
