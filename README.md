@@ -73,13 +73,13 @@ flowchart LR
 ```
 
 - [`index.html`](./index.html), [`app.js`](./app.js): interface and interactions.
-- [`web-entry.js`](./web-entry.js): activates the browser edition, replaces legacy interface copy, and adds installation and connections views.
+- [`web-entry.js`](./web-entry.js): activates the browser edition and adds installation and connections views.
 - [`local-store.js`](./local-store.js): IndexedDB storage, import, retrieval, review scheduling, connections, backups, and browser AI integration.
 - [`embeddings.js`](./embeddings.js): bundled tokenizer and ONNX runtime integration for quantized `Xenova/all-MiniLM-L6-v2`.
 - [`vendor/`](./vendor/): local PDF.js and runtime assets.
 - [`sw.js`](./sw.js): same-origin app-shell caching.
 
-**Implementation note:** some base HTML still contains older SQLite/Ollama wording. The active entry point replaces it at runtime. This browser edition uses **IndexedDB**, not a SQLite server, and does not require Ollama or an API key.
+**Implementation note:** this browser edition uses **IndexedDB**, not a SQLite server, and does not require Ollama or an API key.
 
 ## Privacy, with the important details
 
@@ -100,6 +100,12 @@ flowchart LR
 - Offline operation depends on assets having been cached. First-time model downloads require a connection; browser caching and storage limits vary.
 - Generated answers can be wrong. Source excerpts are available without generation; always check the underlying notes.
 - This repository does not establish production-scale performance benchmarks or an independent security audit.
+
+## Verification notes
+
+In the public demo on 14 November 2026, example-note loading, full-text search, source-excerpt answers, and persistence after reload were verified. Optional semantic indexing was attempted but its model download failed with `Failed to fetch` in the test browser; semantic/hybrid results were therefore not verified. Browser AI correctly reported that the experimental Prompt API was unavailable on that device. These are optional features: full-text retrieval remains available without them.
+
+Previously saved example notes are user-owned library entries and are not overwritten by application updates. If an old SQLite example remains in your library, its claim about B-Ram storage is outdated; the app uses IndexedDB.
 
 ## Third-party notices
 
