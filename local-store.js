@@ -82,7 +82,7 @@ async function buildIndex(){
     for(let i=0;i<chunks.length;i+=8)vectors.push(...await embed(chunks.slice(i,i+8)));
     // Read and compare inside the write transaction; a concurrent edit wins.
     await transaction('readwrite',(store)=>{const r=store.get(doc.id);r.onsuccess=()=>{const current=r.result;if(current&&current.updated_at===doc.updated_at&&current.content===doc.content){current.vectors={model:MODEL,items:vectors};store.put(current);}};});
-  }}catch(error){indexState.error=`Index paused: ${error.message}. Your documents are safe; full-text search still works.`;}
+  }}catch(error){indexState.error=`Index paused: ${error.message}. Check your connection and access to Hugging Face, then retry Build index. Your documents are safe; full-text search still works.`;}
   finally{indexState.running=false;}
 }
 
